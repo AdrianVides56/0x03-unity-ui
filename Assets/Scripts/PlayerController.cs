@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public int health = 5;
     private int score = 0;
     public Text scoreText;
+    public Text healthText;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -48,7 +49,7 @@ public class PlayerController : MonoBehaviour
         if (other.GetComponent<Collider>().tag == "Trap")
         {
             health--;
-            Debug.Log($"Health: {health}");
+            SetHealthText();
         }
         if (other.GetComponent<Collider>().tag == "Goal")
         {
@@ -59,5 +60,10 @@ public class PlayerController : MonoBehaviour
     void SetScoreText()
     {
         scoreText.text = $"Score: {score}";
+    }
+
+    void SetHealthText()
+    {
+        healthText.text = $"Health: {health}";
     }
 }
