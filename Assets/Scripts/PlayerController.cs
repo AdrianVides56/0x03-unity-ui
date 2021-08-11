@@ -2,13 +2,14 @@ using System.Threading;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 500f;
     public int health = 5;
     private int score = 0;
-    public Light lt;
+    public Text scoreText;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
         if (other.GetComponent<Collider>().tag == "Pickup")
         {
             score++;
-            Debug.Log($"Score: {score}");
+            SetScoreText();
             Destroy(other.gameObject);
         }
         if (other.GetComponent<Collider>().tag == "Trap")
@@ -53,5 +54,10 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("You win!");
         }
+    }
+
+    void SetScoreText()
+    {
+        scoreText.text = $"Score: {score}";
     }
 }

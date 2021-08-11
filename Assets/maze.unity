@@ -5613,7 +5613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 500
   health: 5
-  lt: {fileID: 1277474067}
+  scoreText: {fileID: 774817953}
 --- !u!4 &1451740600 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3545185375090630579, guid: 05edc99d14619d54e99ed86f14f662a9,
