@@ -1,4 +1,5 @@
 using System.Threading;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private int score = 0;
     public Text scoreText;
     public Text healthText;
+    public Text winLoseText;
+    public Image winLoseImage;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -31,10 +34,10 @@ public class PlayerController : MonoBehaviour
     {
         if (health == 0)
         {
-            Debug.Log("Game Over!");
+            winLoseImage.gameObject.SetActive(true);
+            winLoseText.text = "Game Over!";
             speed = 0f;
-            Thread.Sleep(1500);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            StartCoroutine(GameOver(3));
         }
     }
 
@@ -43,6 +46,7 @@ public class PlayerController : MonoBehaviour
         if (other.GetComponent<Collider>().tag == "Pickup")
         {
             score++;
+            speed += 50f;
             SetScoreText();
             Destroy(other.gameObject);
         }
@@ -53,7 +57,19 @@ public class PlayerController : MonoBehaviour
         }
         if (other.GetComponent<Collider>().tag == "Goal")
         {
-            Debug.Log("You win!");
+            if (score > 20)
+            {
+                winLoseImage.gameObject.SetActive(true);
+                winLoseImage.color = Color.green;
+                winLoseText.color = Color.black;
+                winLoseText.text = "You Win!";
+                speed = 0f;
+                StartCoroutine(GameOver(3));
+            }
+            else
+            {
+                StartCoroutine(ChekNumCoins(1.5f));
+            }
         }
     }
 
@@ -65,5 +81,20 @@ public class PlayerController : MonoBehaviour
     void SetHealthText()
     {
         healthText.text = $"Health: {health}";
+    }
+
+    private IEnumerator ChekNumCoins(float delay)
+    {
+        winLoseImage.gameObject.SetActive(true);
+        winLoseText.text = "Still missing coins!";
+        yield return new WaitForSeconds(delay);
+        winLoseImage.gameObject.SetActive(false);
+
+    }
+
+    private IEnumerator GameOver(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
