@@ -39,6 +39,10 @@ public class PlayerController : MonoBehaviour
             speed = 0f;
             StartCoroutine(GameOver(3));
         }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
     }
 
     void OnTriggerEnter(Collider other)
